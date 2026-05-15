@@ -58,10 +58,10 @@ def MLPScreenWrap(outputfolder, train_x_input, train_y_input, binary_outcome, vf
         raise Exception('train_y_input must be supplied for screening')
     
     # load data for gene x to be screened#
-    x = pandas.read_csv(train_x_input,sep='\t|,',engine='python')
+    x = pandas.read_csv(str(train_x_input),sep=r'\t|,',engine='python')
     tmpdata = x.drop(x.columns[[0, 1, 2, 3, 4, 5]], axis=1);
     x=tmpdata.to_numpy()
-    y = pandas.read_csv(train_y_input,sep='\t|,',engine='python')
+    y = pandas.read_csv(str(train_y_input),sep=r'\t|,',engine='python')
     tmpdata =y.drop(y.columns[[0, 1]], axis=1);
     y=tmpdata.to_numpy()
     
@@ -81,8 +81,8 @@ def MLPScreenWrap(outputfolder, train_x_input, train_y_input, binary_outcome, vf
         
     print("screening for gene "+str(geneindex))
     
-    outputfile=outputfolder+'/result'+geneindex+'.npy'
-    outputfilemodel=outputfolder+'/result_model'+geneindex
+    outputfile = os.path.join(outputfolder, 'result' + str(geneindex) + '.npy')
+    outputfilemodel = os.path.join(outputfolder, 'result_model' + str(geneindex))
         
     if binary_outcome==1:
         loss='binary_crossentropy'

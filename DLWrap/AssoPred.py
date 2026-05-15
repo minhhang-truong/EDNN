@@ -31,7 +31,7 @@ class AssoPred:
                 raise SystemExit(0)
         
         # load ytrain #
-        tmpdata = pandas.read_csv(train_y_input,sep='\t|,',engine='python')
+        tmpdata = pandas.read_csv(str(train_y_input),sep=r'\t|,',engine='python')
         tmpdata = tmpdata.drop(tmpdata.columns[[0, 1]], axis=1);
         yall=tmpdata.to_numpy()
         inputs=numpy.column_stack((traindata,genes))
