@@ -89,10 +89,10 @@ class myGBLUP:
         allgenotest=param_fixed["allgenotest"]
         GenoFile_test=allgenotest[index]
         sumpq=0
-        Geno=pandas.read_csv(GenoFile)
+        Geno=pandas.read_csv(str(GenoFile))
         Geno=Geno.drop(Geno.columns[[0, 1, 2, 3, 4, 5]], axis=1);
         Geno=Geno.to_numpy();
-        Geno_test=pandas.read_csv(GenoFile_test)
+        Geno_test=pandas.read_csv(str(GenoFile_test))
         Geno_test=Geno_test.drop(Geno_test.columns[[0, 1, 2, 3, 4, 5]], axis=1);
         Geno_test=Geno_test.to_numpy();
         Geno=np.concatenate((Geno, Geno_test), axis=0);
@@ -120,12 +120,12 @@ class myGBLUP:
             for i in range(0,len(inputs)):
                 grm=outputfile+"_GRM_"+str(i)
                 if i==0:
-                    G=pandas.read_csv(grm,sep='\t|,',engine='python',header=None)
+                    G=pandas.read_csv(str(grm),sep=r'\t|,',engine='python',header=None)
                     G=G.to_numpy()
-                    sumpq=pandas.read_csv(grm+"sumpq", sep='\t|,', engine='python', header=None)
+                    sumpq=pandas.read_csv(str(grm)+"sumpq", sep=r'\t|,', engine='python', header=None)
                 else:
-                    G=G+(pandas.read_csv(grm,sep='\t|,',engine='python',header=None)).to_numpy()
-                    sumpq=sumpq+pandas.read_csv(grm+"sumpq",sep='\t|,',engine='python',header=None)
+                    G=G+(pandas.read_csv(str(grm),sep=r'\t|,',engine='python',header=None)).to_numpy()
+                    sumpq=sumpq+pandas.read_csv(str(grm)+"sumpq",sep=r'\t|,',engine='python',header=None)
             G=G/sumpq.to_numpy()/2
         else:
             param_fixed={"outputfile":outputfile, "allinput":inputs, "allgenotest":genotestfile, "ifreturn": True}

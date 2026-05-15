@@ -20,8 +20,10 @@ class AssoPred:
         pathlib.Path(AssociationDir).mkdir(parents=True, exist_ok=True) 
         genes=numpy.genfromtxt(geneindexFile,dtype=str)
         traindata=numpy.genfromtxt(GeneticDataTrain,dtype=str)
+        traindata=numpy.array([x.replace('\\', '/') for x in traindata])
         if assc_only==False:
             testdata=numpy.genfromtxt(GeneticDataTest,dtype=str)
+            testdata=numpy.array([x.replace('\\', '/') for x in testdata])
         if genes.shape[0]!=traindata.shape[0]:
             print("Genetic Training Data and the genes are not consistent!")
             raise SystemExit(0)

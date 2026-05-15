@@ -27,7 +27,7 @@ def MLPPredictionWrap(binary_outcome,GeneticDataTrain,GeneticDataTest, Associati
     print(selectgenes)
     numpy.savetxt(outputPredFile+"summary_genes", selectgenes, fmt="%s")
     if test_y_input is not None:
-        tmpdata = pandas.read_csv(test_y_input,sep='\t|,',engine='python')
+        tmpdata = pandas.read_csv(str(test_y_input),sep=r'\t|,',engine='python')
         tmpdata = tmpdata.drop(tmpdata.columns[[0, 1]], axis=1);
         ytrue=tmpdata.to_numpy()
         results=mlppred.evaluate(pred=pred1, ytrue=ytrue, ytruefile=None, ifbinary=binary_outcome)
@@ -86,7 +86,7 @@ class MLPPrediction:
         includegene=numpy.zeros(n_genes,dtype=int);
         
         for index in range(0, n_genes):
-            files=AssociationDir+"result"+genes[index]+".npy";
+            files=os.path.join(AssociationDir, "result"+str(genes[index])+".npy");
             if os.path.exists(files):
                 with open(files, 'rb') as handle:
                     rs=pickle.load(handle)
@@ -100,7 +100,7 @@ class MLPPrediction:
         print(pvalues)
         
         # load ytrain #
-        tmpdata = pandas.read_csv(ytrainFile,sep='\t|,',engine='python')
+        tmpdata = pandas.read_csv(str(ytrainFile),sep=r'\t|,',engine='python')
         tmpdata = tmpdata.drop(tmpdata.columns[[0, 1]], axis=1);
         yall=tmpdata.to_numpy()
     
@@ -134,19 +134,19 @@ class MLPPrediction:
             xtest_array=numpy.ndarray(sum(includegene==1),dtype=object);
             
             for index in range(0,sum(includegene==1)):
-                #print(AssociationDir+"result_model"+selectgenes[index])
-                model1=keras.models.load_model(AssociationDir+"result_model"+selectgenes[index])
+                #print(os.path.join(AssociationDir, "result_model"+str(selectgenes[index])))
+                model1=keras.models.load_model(os.path.join(AssociationDir, "result_model"+str(selectgenes[index])))
                 model1.trainable=False
                 models[index]=model1
                 modelsconcat[index]=model1.get_layer(model1.layers[-2].name).output
                 modelsinput[index]=model1.input;
         
-                tmpdata = pandas.read_csv(traindata[index],sep='\t|,',engine='python')
+                tmpdata = pandas.read_csv(str(traindata[index]),sep=r'\t|,',engine='python')
                 tmpdata = tmpdata.drop(tmpdata.columns[[0, 1, 2, 3, 4, 5]], axis=1);
                 xalltmp=tmpdata.to_numpy()
                 xtrain_array[index]=xalltmp;
         
-                tmpdata= pandas.read_csv(testdata[index],sep='\t|,',engine='python')
+                tmpdata= pandas.read_csv(str(testdata[index]),sep=r'\t|,',engine='python')
                 TestID=tmpdata.iloc[:,[0, 1, 2, 3, 4, 5]]
                 tmpdata =tmpdata.drop(tmpdata.columns[[0, 1, 2, 3, 4, 5]], axis=1);
                 xtesttmp=tmpdata.to_numpy()
@@ -202,9 +202,9 @@ class MLPPrediction:
         #    tmpdata =tmpdata.drop(tmpdata.columns[[0, 1, 2, 3, 4, 5]], axis=1);
         #    x_test=tmpdata.to_numpy()
             
-        #    model=keras.models.load_model(AssociationDir+"result_model"+selectgenes[0])
+        #    model=keras.models.load_model(os.path.join(AssociationDir, "result_model"+str(selectgenes[0])))
         #    predictions =  model.predict(x_test.tolist()) 
-            tmpdata= pandas.read_csv(testdata[index],sep='\t|,',engine='python')###myself
+            tmpdata= pandas.read_csv(str(testdata[index]),sep=r'\t|,',engine='python')###myself
             TestID=tmpdata.iloc[:,[0, 1, 2, 3, 4, 5]]###myself
             print(TestID.shape)
             print(predictions.shape)    
@@ -226,7 +226,7 @@ class MLPPrediction:
         if ytrue is not None and ytruefile is not None:
             print("The true value provided will be used!")
         if ytrue is None and ytruefile is not None:
-            tmpdata = pandas.read_csv(ytruefile,sep='\t|,',engine='python')
+            tmpdata = pandas.read_csv(str(ytruefile),sep=r'\t|,',engine='python')
             tmpdata = tmpdata.drop(tmpdata.columns[[0, 1]], axis=1);
             ytrue=tmpdata.to_numpy()
         if ifbinary==1:
