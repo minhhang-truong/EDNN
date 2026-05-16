@@ -183,7 +183,7 @@ class MLPPrediction:
             # Fit model #
             xtrain_all=xtrain_array.tolist()
             xtrain_all.append(blup_pred_tr)
-            model.fit(xtrain_all, yall, epochs=100, validation_split = .2, verbose=0) 
+            model.fit(xtrain_all, yall, epochs=20, validation_split = .2, verbose=0) 
             xtest_all=xtest_array.tolist()
             xtest_all.append(blup_pred_test)
             predictions =  model.predict(xtest_all)

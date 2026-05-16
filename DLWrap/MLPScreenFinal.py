@@ -186,7 +186,7 @@ class MLPScreen:
         if ifbinary==1:
             model.add(Dense(1, activation="sigmoid"))
         model.compile(loss=loss, optimizer=optimizer, metrics=metrics)
-        model.fit(x, y, epochs=100, validation_split = .2, verbose=0)
+        model.fit(x, y, epochs=20, validation_split = .2, verbose=0)
         predictions =model.predict(x_test)   
         if cross_cri=="mse":
             Resulttmp=numpy.array([reg,mean_squared_error(y_test,predictions)]);
@@ -247,7 +247,7 @@ class MLPScreen:
         if ifbinary==1:
             model.add(Dense(1, activation="sigmoid",name=geneindex+"_dense2"))    
         model.compile(loss=loss, optimizer=optimizer, metrics=metrics)
-        model.fit(xall, yall, epochs=100, validation_split = .2, verbose=0)        
+        model.fit(xall, yall, epochs=20, validation_split = .2, verbose=0)        
         return model, reg
 
 
