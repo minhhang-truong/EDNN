@@ -73,7 +73,9 @@ class MLPPrediction:
         ## Load association results and find genes that are predictive given alpha ##
         genes=numpy.genfromtxt(geneindexFile,dtype=str)
         traindata=numpy.genfromtxt(GeneticDataTrain,dtype=str)
+        traindata=numpy.array([x.replace('\\', '/') for x in traindata])
         testdata=numpy.genfromtxt(GeneticDataTest,dtype=str)
+        testdata=numpy.array([x.replace('\\', '/') for x in testdata])
         if genes.shape[0]!=traindata.shape[0]:
             print("Genetic Training Data and the genes are not consistent!")
             raise SystemExit(0)
