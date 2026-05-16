@@ -361,7 +361,7 @@ class MLPScreen:
         if ifbinary==1:
             model.add(Dense(1, activation="sigmoid",name=geneindex+"l2"))
         model.compile(loss=loss, optimizer=optimizer, metrics=metrics)
-        model.fit(xdata, ydata, epochs=100, validation_split = .2, verbose=verbose)
+        model.fit(xdata, ydata, epochs=20, validation_split = .2, verbose=verbose)
         print(tf.config.list_physical_devices('GPU'))
 
         return model,pvalue,scorereturn,scorelistreturn,reg
